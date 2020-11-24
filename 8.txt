@@ -1,0 +1,80 @@
+前情回顾
+
+1. 索引
+   功能: 提高数据查询效率
+   使用: 数据量比较大  经常进行查询操作
+   分类: 普通  唯一  主键
+
+   create table [tb](
+   col type primary key,
+   col type unique,
+   index [indexName](col)
+   )
+
+   create index [indexName] on [tb](col)
+
+   desc
+   show index from [tb]
+   drop index [indexName] on [tb]
+
+2. 外键约束
+
+   作用: 1. 有时有一定关联性的数据不能存在一个表中 (冗余)
+        2. 拆分字段形成多个表降低冗余  (需要表达数据之间关系)
+        3. 从表增加一个关联字段表达数据关系(关联字段没有限制)
+        4. 建立外键约束 限制字段形成级联关系 (数据拷贝迁移效率低)
+
+   constraint [外键名]
+   foreign key (字段)
+   references [主表](主键)
+   [级联动作]
+
+   删除: alter table [tb] drop foreign key [keyname]
+   查看: show create table [tb]
+
+3.表关系
+
+  一对一  一对多  多对多
+  E-R 模型
+
+4. 连接查询
+
+   内连接
+
+    select ...
+    from tb1 inner join tb2 on 连接条件
+    where ...
+    group by ...
+    having ...
+    order by ...
+    limit ...
+
+
+   外连接(左连接  右连接)
+
+   select ...
+    from tb1 left join tb2 on 连接条件
+
+   select ...
+    from tb1 right join tb2 on 连接条件
+
+cookie : 多个表进行连接查询 (>2)
+
+select ...
+from (tb1 left join tb2  on tb1.id=tb2.tb1_id)
+left join tb3 on tb1.id=tb3.tb1_id
+left join tb4 ....
+
+e.g.
+select student.sname,class.caption,score.number
+from class left join student
+on class.cid=student.class_id
+left join score
+on student.sid=score.student_id;
+
+练习: 编写一个函数 传入两个学生的姓名,返回两人的分数只差
+
+
+
+
+
